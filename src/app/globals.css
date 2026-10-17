@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Design tokens taken from the UOSG Figma design */
+@theme {
+  --color-brand-50: #e8f3ec;
+  --color-brand-100: #d3e9db;
+  --color-brand-600: #0b7f41;
+  --color-brand-700: #096b37;
+  --color-brand-800: #0a5a30;
+  --color-brand-900: #063f22;
+
+  --color-navy-800: #1c2559;
+  --color-navy-900: #161d47;
+
+  --color-ink: #1b1f3b;
+  --color-body: #4a5068;
+  --color-muted: #7a8094;
+  --color-line: #e3e7ea;
+  --color-mist: #f3f6f4;
+
+  --color-ember-500: #dc3b26;
+  --color-ember-600: #c3311e;
+  --color-violet-600: #6b2fa0;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-merriweather), ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+}
+
+/* Offset anchor targets so the sticky header doesn't cover section titles */
+section[id] {
+  scroll-margin-top: 5rem;
+}
