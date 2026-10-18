@@ -1,0 +1,121 @@
+// UOSG database schema.
+// After editing: `npm run db:migrate -- --name <change>` (creates a migration and regenerates the client).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Member roles, from newest member to group leadership. Guests can't use the dashboard.
+enum Role {
+  GUEST
+  ROVER
+  ASSISTANT_ROVER_MATE
+  ROVER_MATE
+  SENIOR_ROVER_MATE
+  ROVER_SCOUT_LEADER
+  GROUP_COMMITTEE_MEMBER
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ROVER)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions        Session[]
+  letters         Letter[]       @relation("LetterAuthor")
+  reviewedLetters Letter[]       @relation("LetterReviewer")
+  announcements   Announcement[]
+}
+
+/// Login sessions. `id` is the SHA-256 hash of the cookie token, so a leaked
+/// database row can't be used to sign in.
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Failed sign-in attempts, used to slow down password guessing.
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  createdAt DateTime @default(now())
+
+  @@index([email, createdAt])
+}
+
+enum LetterStatus {
+  DRAFT
+  IN_REVIEW
+  CHANGES_REQUESTED
+  APPROVED
+}
+
+model Letter {
+  id             String       @id @default(cuid())
+  title          String
+  reference      String?      @unique
+  letterDate     DateTime?
+  recipient      String       @default("")
+  subject        String       @default("")
+  /// Rich-text body from the Letter Builder editor (JSON document).
+  body           Json?
+  signatory      String       @default("")
+  signatoryTitle String       @default("")
+  status         LetterStatus @default(DRAFT)
+  reviewNote     String?
+  submittedAt    DateTime?
+  approvedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  authorId   String
+  author     User    @relation("LetterAuthor", fields: [authorId], references: [id])
+  reviewerId String?
+  reviewer   User?   @relation("LetterReviewer", fields: [reviewerId], references: [id])
+
+  @@index([authorId])
+  @@index([status])
+}
+
+model Announcement {
+  id          String    @id @default(cuid())
+  title       String
+  summary     String
+  coverImage  String?
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  @@index([published, publishedAt])
+}
+
+model ContactMessage {
+  id        String    @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([createdAt])
+}

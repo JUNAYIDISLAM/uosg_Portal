@@ -4,14 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { NewsItem } from "@/content/site";
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-// Formats an ISO date as "25 Sep 2026" (Intl gives "Sept" in some locales/runtimes).
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
-}
+import { formatDate } from "@/lib/format";
 
 export function News({ items }: { items: NewsItem[] }) {
   const track = useRef<HTMLUListElement>(null);
