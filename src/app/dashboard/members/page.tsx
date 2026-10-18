@@ -87,7 +87,7 @@ async function Members() {
       </Card>
 
       <Card>
-        <h2 className="mb-5 font-serif text-xl font-bold text-ink">Add member</h2>
+        <h2 className="mb-5 font-heading text-xl font-bold text-ink">Add member</h2>
         <AddMemberForm />
       </Card>
     </div>

@@ -60,13 +60,13 @@ async function EditMember({ params }: Pick<PageProps<"/dashboard/members/[id]">,
 
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
         <Card>
-          <h2 className="mb-5 font-serif text-xl font-bold text-ink">Details & role</h2>
+          <h2 className="mb-5 font-heading text-xl font-bold text-ink">Details & role</h2>
           <EditMemberForm member={member} isSelf={isSelf} />
         </Card>
 
         <div className="space-y-6">
           <Card>
-            <h2 className="mb-1 font-serif text-xl font-bold text-ink">Reset password</h2>
+            <h2 className="mb-1 font-heading text-xl font-bold text-ink">Reset password</h2>
             <p className="mb-5 text-sm text-body">
               Use this if the member forgot their password. They will be signed out everywhere.
             </p>
@@ -75,7 +75,7 @@ async function EditMember({ params }: Pick<PageProps<"/dashboard/members/[id]">,
 
           {!isSelf && (
             <Card>
-              <h2 className="mb-1 font-serif text-xl font-bold text-ink">Remove member</h2>
+              <h2 className="mb-1 font-heading text-xl font-bold text-ink">Remove member</h2>
               <p className="mb-5 text-sm text-body">
                 {member._count.letters > 0
                   ? "This member has written letters, so their account will be deactivated instead of deleted to keep the letter history."

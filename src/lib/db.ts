@@ -13,6 +13,19 @@ function createClient() {
 // Reuse one client across hot reloads in development.
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-export const db = globalForPrisma.prisma ?? createClient();
+function getClient() {
+  globalForPrisma.prisma ??= createClient();
+  return globalForPrisma.prisma;
+}
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+/**
+ * The client is created on first use, not on import, so the site still builds
+ * (and the public pages still work) when no database is configured.
+ */
+export const db = new Proxy({} as PrismaClient, {
+  get(_target, property) {
+    const client = getClient();
+    const value = Reflect.get(client, property);
+    return typeof value === "function" ? value.bind(client) : value;
+  },
+});

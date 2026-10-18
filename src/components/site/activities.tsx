@@ -33,7 +33,7 @@ export function Activities() {
             <Tag>{featuredActivity.tag}</Tag>
             <div className="absolute inset-x-0 bottom-0 p-7 text-white">
               <p className="text-sm font-medium text-white/80">{featuredActivity.label}</p>
-              <h3 className="mt-1 font-serif text-2xl font-bold">{featuredActivity.title}</h3>
+              <h3 className="mt-1 font-heading text-2xl font-bold">{featuredActivity.title}</h3>
               <p className="mt-2 text-sm text-white/85">{featuredActivity.text}</p>
             </div>
           </article>
@@ -51,7 +51,7 @@ export function Activities() {
                 <Tag>{activity.tag}</Tag>
               </div>
               <div className="p-5">
-                <h3 className="font-serif font-bold text-ink">{activity.title}</h3>
+                <h3 className="font-heading font-bold text-ink">{activity.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-body">{activity.text}</p>
               </div>
             </article>

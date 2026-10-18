@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { hashPassword, PASSWORD_MIN_LENGTH, verifyPassword } from "@/lib/auth/password";
@@ -33,8 +33,17 @@ function safeNextPath(value: FormDataEntryValue | null) {
   return next.startsWith("/dashboard") && !next.startsWith("//") ? next : "/dashboard";
 }
 
+const DATABASE_DOWN = "We can't reach the database right now. Please try again in a minute.";
+
 export async function login(_prev: FormState, formData: FormData): Promise<FormState> {
-  return { ...(await attemptLogin(formData)), values: keep(formData, "email") };
+  const values = keep(formData, "email");
+  try {
+    return { ...(await attemptLogin(formData)), values };
+  } catch (error) {
+    unstable_rethrow(error); // let the success redirect through
+    console.error("[login] failed:", error);
+    return { error: DATABASE_DOWN, values };
+  }
 }
 
 async function attemptLogin(formData: FormData): Promise<FormState> {

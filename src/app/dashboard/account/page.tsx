@@ -24,7 +24,7 @@ async function Account() {
   return (
     <div className="mt-8 grid items-start gap-6 lg:grid-cols-2">
       <Card>
-        <h2 className="mb-4 font-serif text-xl font-bold text-ink">Profile</h2>
+        <h2 className="mb-4 font-heading text-xl font-bold text-ink">Profile</h2>
         <dl className="divide-y divide-line text-sm">
           <div className="flex justify-between gap-4 py-3">
             <dt className="text-body">Name</dt>
@@ -45,7 +45,7 @@ async function Account() {
       </Card>
 
       <Card>
-        <h2 className="mb-5 font-serif text-xl font-bold text-ink">Change password</h2>
+        <h2 className="mb-5 font-heading text-xl font-bold text-ink">Change password</h2>
         <ChangePasswordForm />
       </Card>
     </div>

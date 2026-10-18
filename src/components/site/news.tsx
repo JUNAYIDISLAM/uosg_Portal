@@ -24,7 +24,7 @@ export function News({ items }: { items: NewsItem[] }) {
           <div className="max-w-xl">
             <h2
               id="news-title"
-              className="font-serif text-3xl font-bold text-ink sm:text-4xl"
+              className="font-heading text-3xl font-bold text-ink sm:text-4xl"
             >
               Latest news &amp; announcements
             </h2>
@@ -78,7 +78,7 @@ export function News({ items }: { items: NewsItem[] }) {
                 <time dateTime={item.date} className="mt-4 block text-xs text-muted">
                   {formatDate(item.date)}
                 </time>
-                <h3 className="mt-1 font-serif text-lg font-bold text-ink">{item.title}</h3>
+                <h3 className="mt-1 font-heading text-lg font-bold text-ink">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-body">{item.summary}</p>
               </article>
             </li>

@@ -2,6 +2,7 @@
 
 import { refresh } from "next/cache";
 import { z } from "zod";
+import { siteInfo } from "@/content/site";
 import { requirePermission } from "@/lib/auth/current-user";
 import { db } from "@/lib/db";
 
@@ -27,7 +28,16 @@ export async function sendContactMessage(
   _prev: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
-  const state = await saveContactMessage(formData);
+  let state: ContactState;
+  try {
+    state = await saveContactMessage(formData);
+  } catch (error) {
+    console.error("[contact] could not save message:", error);
+    state = {
+      status: "error",
+      message: `Sorry, we couldn't send your message right now. Please email us at ${siteInfo.email}.`,
+    };
+  }
   if (state.status !== "error") return state;
   const value = (key: string) => String(formData.get(key) ?? "");
   return { ...state, values: { name: value("name"), email: value("email"), message: value("message") } };

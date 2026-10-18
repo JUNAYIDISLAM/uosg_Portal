@@ -12,7 +12,7 @@ export function GetInvolved() {
         <p className="text-sm font-semibold text-white/80">Get involved</p>
         <h2
           id="involved-title"
-          className="mt-2 max-w-md font-serif text-3xl font-bold text-white sm:text-4xl"
+          className="mt-2 max-w-md font-heading text-3xl font-bold text-white sm:text-4xl"
         >
           Be a part of something bigger
         </h2>

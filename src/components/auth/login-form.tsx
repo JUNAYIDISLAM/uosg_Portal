@@ -1,18 +1,37 @@
 "use client";
 
-import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useActionState } from "react";
 import { ShieldCheck } from "lucide-react";
 import { login, type FormState } from "@/app/actions/auth";
 import { buttonClass } from "@/components/ui/button";
 import { Field, FormError, TextInput } from "@/components/ui/form";
 
-export function LoginForm({ next, notice }: { next?: string; notice?: string }) {
+const notices: Record<string, string> = {
+  "no-access": "Your account doesn't have access to the dashboard.",
+};
+
+/** Reads ?next= and ?error= from the URL. Streams in on its own so the inputs never remount. */
+function UrlFields({ showNotice }: { showNotice: boolean }) {
+  const params = useSearchParams();
+  const notice = notices[params.get("error") ?? ""];
+  return (
+    <>
+      <input type="hidden" name="next" value={params.get("next") ?? ""} />
+      {showNotice && <FormError message={notice} />}
+    </>
+  );
+}
+
+export function LoginForm() {
   const [state, formAction, pending] = useActionState<FormState, FormData>(login, {});
 
   return (
     <form action={formAction} className="space-y-5">
-      <input type="hidden" name="next" value={next ?? ""} />
-      <FormError message={state.error ?? notice} />
+      <Suspense>
+        <UrlFields showNotice={!state.error} />
+      </Suspense>
+      <FormError message={state.error} />
 
       <Field label="Email" name="email">
         <TextInput

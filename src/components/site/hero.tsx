@@ -9,7 +9,7 @@ export function Hero() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
         <div>
           <p className="text-sm font-semibold text-brand-600">Explore · Learn · Serve</p>
-          <h1 className="mt-4 font-serif text-4xl font-black leading-[1.08] text-brand-800 sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 font-heading text-4xl font-bold leading-[1.08] text-brand-800 sm:text-5xl lg:text-6xl">
             United Open Scout Group
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-body">

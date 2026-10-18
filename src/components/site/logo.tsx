@@ -17,7 +17,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-3" aria-label="UOSG home">
       <LogoMark />
-      <span className="font-serif text-2xl font-bold text-brand-800">UOSG</span>
+      <span className="font-heading text-2xl font-bold text-brand-800">UOSG</span>
     </Link>
   );
 }

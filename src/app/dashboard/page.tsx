@@ -59,7 +59,7 @@ async function AwaitingReview() {
 
   return (
     <Card>
-      <h2 className="font-serif text-xl font-bold text-ink">Awaiting your review</h2>
+      <h2 className="font-heading text-xl font-bold text-ink">Awaiting your review</h2>
       <p className="mt-1 text-sm text-body">
         Letters submitted by members that need approval before export.
       </p>
@@ -95,7 +95,7 @@ async function AwaitingReview() {
 function GettingStarted() {
   return (
     <Card>
-      <h2 className="font-serif text-xl font-bold text-ink">Getting started</h2>
+      <h2 className="font-heading text-xl font-bold text-ink">Getting started</h2>
       <p className="mt-1 text-sm text-body">
         Draft official group letters, then submit them for review. Approved letters can be
         exported as PDF.
@@ -130,12 +130,12 @@ async function AtAGlance({ user, reviewer }: { user: CurrentUser; reviewer: bool
 
   return (
     <Card>
-      <h2 className="font-serif text-xl font-bold text-ink">At a glance</h2>
+      <h2 className="font-heading text-xl font-bold text-ink">At a glance</h2>
       <dl className="mt-3 divide-y divide-line">
         {rows.map((row) => (
           <div key={row.label} className="flex items-center justify-between py-3.5">
             <dt className="text-sm text-body">{row.label}</dt>
-            <dd className="font-serif text-xl font-bold text-ink">{row.value}</dd>
+            <dd className="font-heading text-xl font-bold text-ink">{row.value}</dd>
           </div>
         ))}
       </dl>
@@ -154,7 +154,7 @@ async function RecentActivity({ user }: { user: CurrentUser }) {
   return (
     <Card className="mt-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-xl font-bold text-ink">Recent activity</h2>
+        <h2 className="font-heading text-xl font-bold text-ink">Recent activity</h2>
         <Link href="/dashboard/letters" className="text-sm font-semibold text-brand-700 hover:underline">
           All letters
         </Link>

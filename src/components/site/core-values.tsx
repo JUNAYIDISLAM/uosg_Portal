@@ -23,7 +23,7 @@ export function CoreValues() {
                 <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                   <Icon className="size-6" aria-hidden="true" />
                 </span>
-                <h3 className="mt-5 font-serif text-lg font-bold text-ink">{value.title}</h3>
+                <h3 className="mt-5 font-heading text-lg font-bold text-ink">{value.title}</h3>
                 <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-body">
                   {value.text}
                 </p>

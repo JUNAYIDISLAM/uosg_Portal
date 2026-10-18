@@ -72,7 +72,7 @@ export function Leadership() {
               <div key={tier.title} className="mb-8 md:mb-0">
                 <div className="grid gap-4 md:grid-cols-[200px_1fr] md:gap-8">
                   <div className="md:pt-3 md:text-right">
-                    <h3 className="font-serif font-bold text-ink">{tier.title}</h3>
+                    <h3 className="font-heading font-bold text-ink">{tier.title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-body">{tier.description}</p>
                   </div>
                   <ul
@@ -96,12 +96,12 @@ export function Leadership() {
 
           <div className="mt-8 grid gap-4 md:mt-0 md:grid-cols-[200px_1fr] md:gap-8">
             <div className="md:text-right">
-              <h3 className="font-serif font-bold text-ink">Rovers</h3>
+              <h3 className="font-heading font-bold text-ink">Rovers</h3>
               <p className="mt-1 text-sm text-body">The heart of the crew.</p>
             </div>
             <p className="flex items-center gap-3 rounded-xl bg-brand-50 px-4 py-4 text-sm text-brand-700 md:max-w-[45%] md:min-w-80">
               <Users className="size-5 text-brand-700" aria-hidden="true" />
-              <span className="font-serif text-xl font-bold">{roverCount.active}</span>
+              <span className="font-heading text-xl font-bold">{roverCount.active}</span>
               active rovers across {roverCount.units} units
             </p>
           </div>

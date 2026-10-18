@@ -15,7 +15,7 @@ export function SiteFooter() {
     <footer>
       <div className="bg-brand-600">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <p className="font-serif text-xl font-bold text-white">
+          <p className="font-heading text-xl font-bold text-white">
             Secure a better future through Scouting.
           </p>
           <Link href="/#contact" className={buttonClass("white", "sm")}>
@@ -32,7 +32,7 @@ export function SiteFooter() {
                 <LogoMark size={36} />
               </span>
               <div>
-                <p className="font-serif font-bold text-white">{siteInfo.name}</p>
+                <p className="font-heading font-bold text-white">{siteInfo.name}</p>
                 <p className="text-xs">{siteInfo.tagline}</p>
               </div>
             </div>

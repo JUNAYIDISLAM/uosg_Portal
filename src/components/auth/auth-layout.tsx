@@ -18,7 +18,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         />
         <div className="absolute inset-0 -z-10 bg-brand-700/70" />
         <figure className="absolute inset-x-12 bottom-14 text-white">
-          <blockquote className="font-serif text-3xl leading-snug font-bold">
+          <blockquote className="font-heading text-3xl leading-snug font-bold">
             “Leave this world a little better than you found it.”
           </blockquote>
           <figcaption className="mt-4 text-white/85">— Robert Baden-Powell</figcaption>
@@ -29,7 +29,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <LogoMark />
-            <span className="font-serif text-2xl font-bold text-brand-800">UOSG</span>
+            <span className="font-heading text-2xl font-bold text-brand-800">UOSG</span>
           </Link>
           <Link
             href="/"

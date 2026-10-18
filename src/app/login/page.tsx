@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { AuthLayout } from "@/components/auth/auth-layout";
 import { LoginForm } from "@/components/auth/login-form";
@@ -10,48 +11,59 @@ import { can } from "@/lib/permissions";
 
 export const metadata: Metadata = { title: "Member login" };
 
-const notices: Record<string, string> = {
-  "no-access": "Your account doesn't have access to the dashboard.",
-};
-
-export default function LoginPage({ searchParams }: PageProps<"/login">) {
+export default function LoginPage() {
   return (
     <AuthLayout>
-      <h1 className="font-serif text-3xl font-bold text-ink">Member login</h1>
+      <h1 className="font-heading text-3xl font-bold text-ink">Member login</h1>
       <p className="mt-3 text-body">
         Sign in to manage letters, announcements and group documents.
       </p>
       <div className="mt-8">
-        <Suspense fallback={<div className="h-72 animate-pulse rounded-xl bg-mist" />}>
-          <LoginSection searchParams={searchParams} />
+        {/* The database checks never block the form: each streams in on its own
+            and renders nothing if the database can't be reached. */}
+        <Suspense>
+          <RedirectIfSignedIn />
         </Suspense>
+        <Suspense>
+          <SetupNotice />
+        </Suspense>
+        <LoginForm />
       </div>
     </AuthLayout>
   );
 }
 
-async function LoginSection({ searchParams }: Pick<PageProps<"/login">, "searchParams">) {
-  const user = await getCurrentUser();
-  if (user && can(user.role, "dashboard.access")) redirect("/dashboard");
+async function RedirectIfSignedIn() {
+  let signedIn = false;
+  try {
+    const user = await getCurrentUser();
+    signedIn = !!user && can(user.role, "dashboard.access");
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error("[login] session check failed:", error);
+  }
+  if (signedIn) redirect("/dashboard");
+  return null;
+}
 
-  const params = await searchParams;
-  const next = typeof params.next === "string" ? params.next : undefined;
-  const error = typeof params.error === "string" ? notices[params.error] : undefined;
-
-  const needsSetup = (await db.user.count()) === 0;
+async function SetupNotice() {
+  await connection(); // check the database at request time, not during the build
+  let needsSetup = false;
+  try {
+    needsSetup = (await db.user.count()) === 0;
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error("[login] setup check failed:", error);
+  }
+  if (!needsSetup) return null;
 
   return (
-    <>
-      {needsSetup && (
-        <p className="mb-5 rounded-lg bg-brand-50 px-3.5 py-3 text-sm text-brand-800">
-          No accounts exist yet.{" "}
-          <Link href="/setup" className="font-semibold underline">
-            Create the first admin account
-          </Link>
-          .
-        </p>
-      )}
-      <LoginForm next={next} notice={error} />
-    </>
+    <p className="mb-5 rounded-lg bg-brand-50 px-3.5 py-3 text-sm text-brand-800">
+      No accounts exist yet.{" "}
+      <Link href="/setup" className="font-semibold underline">
+        Create the first admin account
+      </Link>
+      .
+    </p>
   );
 }

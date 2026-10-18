@@ -119,7 +119,7 @@ export function Sidebar({ items, user }: Props) {
       <div className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-line bg-white px-4 lg:hidden">
         <Link href="/dashboard" className="flex items-center gap-2.5">
           <LogoMark size={32} />
-          <span className="font-serif text-xl font-bold text-brand-800">UOSG</span>
+          <span className="font-heading text-xl font-bold text-brand-800">UOSG</span>
         </Link>
         <button
           type="button"
@@ -146,7 +146,7 @@ export function Sidebar({ items, user }: Props) {
             <div className="mb-4 flex items-center justify-between px-5">
               <span className="flex items-center gap-2.5">
                 <LogoMark size={32} />
-                <span className="font-serif text-xl font-bold text-brand-800">UOSG</span>
+                <span className="font-heading text-xl font-bold text-brand-800">UOSG</span>
               </span>
               <button
                 type="button"
@@ -166,7 +166,7 @@ export function Sidebar({ items, user }: Props) {
       <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-line bg-white pt-6 lg:flex">
         <Link href="/dashboard" className="mb-6 flex items-center gap-3 px-6">
           <LogoMark />
-          <span className="font-serif text-2xl font-bold text-brand-800">UOSG</span>
+          <span className="font-heading text-2xl font-bold text-brand-800">UOSG</span>
         </Link>
         {nav}
       </aside>

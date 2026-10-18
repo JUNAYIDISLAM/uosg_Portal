@@ -12,7 +12,7 @@ export function PageHeader({ eyebrow, title, description, actions }: Props) {
     <div className="flex flex-wrap items-end justify-between gap-4">
       <div>
         {eyebrow && <p className="text-sm text-body">{eyebrow}</p>}
-        <h1 className="font-serif text-3xl font-bold text-ink sm:text-4xl">{title}</h1>
+        <h1 className="font-heading text-3xl font-bold text-ink sm:text-4xl">{title}</h1>
         {description && <p className="mt-2 text-body">{description}</p>}
       </div>
       {actions}
