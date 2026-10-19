@@ -19,7 +19,7 @@ export const siteInfo = {
 export const navLinks = [
   { label: "Home", href: "/#home" },
   { label: "About Us", href: "/#about" },
-  { label: "Leadership", href: "/#leadership" },
+  { label: "Leadership", href: "/leadership" },
   { label: "Activities", href: "/#activities" },
   { label: "News", href: "/#news" },
   { label: "Gallery", href: "/#gallery" },
@@ -51,59 +51,31 @@ export const aboutPoints = [
   "A supportive and inclusive community",
 ];
 
-export type AvatarTone = "navy" | "green" | "violet" | "ember";
-
-export type Leader = {
+export type CommitteeMember = {
   name: string;
   role: string;
-  since: number;
+  photo: string;
 };
 
-export type LeadershipTier = {
-  title: string;
-  description: string;
-  tone: AvatarTone;
-  leaders: Leader[];
+/** Group Committee shown in "Our leadership hierarchy". The first member is shown on top. */
+export const committee = {
+  term: "2025–28",
+  members: [
+    { name: "Md Mahabub Alam", role: "President", photo: "/images/committee/mahabub-alam.jpg" },
+    { name: "Sanjoy Das", role: "Vice-President", photo: "/images/committee/sanjoy-das.jpg" },
+    { name: "Md Sakib Uddin", role: "Treasurer", photo: "/images/committee/sakib-uddin.jpg" },
+    { name: "Alamgir Kabir Abir", role: "Secretary", photo: "/images/committee/alamgir-kabir-abir.jpg" },
+    { name: "Mohammad Rubel", role: "Rover Scout Leader", photo: "/images/committee/mohammad-rubel.jpg" },
+    { name: "Suraiya Islam Shrity", role: "Rover Scout Leader", photo: "/images/committee/suraiya-islam-shrity.jpg" },
+    { name: "Rakibul Islam", role: "Executive Member", photo: "/images/committee/rakibul-islam.jpg" },
+    { name: "Mustafizur Rahman", role: "Executive Member", photo: "/images/committee/mustafizur-rahman.jpg" },
+    { name: "Sadia Akter", role: "Executive Member", photo: "/images/committee/sadia-akter.jpg" },
+    { name: "Anisuzzaman Nahid", role: "Executive Member", photo: "/images/committee/anisuzzaman-nahid.jpg" },
+    { name: "Razmin Akter", role: "Executive Member", photo: "/images/committee/razmin-akter.jpg" },
+    { name: "Md Junayid Islam", role: "Senior Rover Mate", photo: "/images/committee/junayid-islam.jpg" },
+    { name: "Tania Akter", role: "Senior Rover Mate", photo: "/images/committee/tania-akter.jpg" },
+  ] satisfies CommitteeMember[],
 };
-
-export const leadershipSession = "2026 – 2027";
-
-export const leadershipTiers: LeadershipTier[] = [
-  {
-    title: "Group Committee",
-    description: "Oversees the group, its policy and its partnerships.",
-    tone: "navy",
-    leaders: [
-      { name: "Md. Abdur Rahman", role: "President, Group Committee", since: 2024 },
-      { name: "Farhana Akter", role: "Secretary, Group Committee", since: 2025 },
-    ],
-  },
-  {
-    title: "Rover Scout Leader",
-    description: "Guides the crew’s programme, training and progress.",
-    tone: "green",
-    leaders: [{ name: "Tanvir Ahmed", role: "Rover Scout Leader (RSL)", since: 2023 }],
-  },
-  {
-    title: "Senior Rover Mate",
-    description: "Leads the crew day to day and coordinates the mates.",
-    tone: "violet",
-    leaders: [{ name: "Sadia Islam", role: "Senior Rover Mate", since: 2026 }],
-  },
-  {
-    title: "Rover Mates",
-    description: "Each leads a patrol, supported by an assistant.",
-    tone: "ember",
-    leaders: [
-      { name: "Rakibul Hasan", role: "Rover Mate · Sundarban Patrol", since: 2026 },
-      { name: "Nusrat Jahan", role: "Rover Mate · Padma Patrol", since: 2026 },
-      { name: "Arif Hossain", role: "Asst. Rover Mate · Sundarban Patrol", since: 2026 },
-      { name: "Mim Chowdhury", role: "Asst. Rover Mate · Padma Patrol", since: 2026 },
-    ],
-  },
-];
-
-export const roverCount = { active: 112, units: 2 };
 
 export type Activity = {
   title: string;
@@ -147,14 +119,19 @@ export const activities: Activity[] = [
   },
 ];
 
-export const stats = {
-  headline: { value: "120+", label: "Active members" },
-  items: [
-    { label: "Successful camps", value: "15+" },
-    { label: "Community service events", value: "30+" },
-    { label: "Group achievements", value: "5" },
-  ],
+export type Stat = {
+  value: string;
+  label: string;
+  icon: "members" | "camps" | "service" | "achievements";
+  color: "green" | "violet" | "navy" | "red";
 };
+
+export const stats: Stat[] = [
+  { value: "120+", label: "Active members", icon: "members", color: "green" },
+  { value: "15+", label: "Successful camps", icon: "camps", color: "violet" },
+  { value: "30+", label: "Community service events", icon: "service", color: "navy" },
+  { value: "5", label: "Group achievements", icon: "achievements", color: "red" },
+];
 
 export type NewsItem = {
   date: string; // ISO date

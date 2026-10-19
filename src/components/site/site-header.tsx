@@ -20,14 +20,17 @@ export function SiteHeader() {
         <span className="flex-1 bg-ember-500" />
       </div>
 
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-24 lg:px-8">
         <Logo />
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-7 text-sm font-medium text-body">
+          <ul className="flex items-center gap-7 text-[15px] font-semibold text-navy-800">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="transition-colors hover:text-brand-700">
+                <Link
+                  href={link.href}
+                  className="decoration-2 underline-offset-[6px] hover:underline"
+                >
                   {link.label}
                 </Link>
               </li>
@@ -36,10 +39,13 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/login" className={buttonClass("primary", "md", "hidden sm:inline-flex")}>
-            <Lock className="size-4" aria-hidden="true" />
-            Member Login
-          </Link>
+          {/* On phones the login link lives in the menu instead. */}
+          <div className="hidden sm:block">
+            <Link href="/login" className={buttonClass("primary")}>
+              <Lock className="size-4" aria-hidden="true" />
+              Member Login
+            </Link>
+          </div>
           <button
             type="button"
             className="inline-flex size-10 items-center justify-center rounded-lg text-ink hover:bg-mist lg:hidden"
@@ -60,7 +66,7 @@ export function SiteHeader() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block rounded-lg px-3 py-2.5 text-sm font-medium text-body hover:bg-mist hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2.5 text-[15px] font-semibold text-navy-800 hover:bg-mist"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}

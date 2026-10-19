@@ -16,7 +16,7 @@ export function Contact() {
         <div>
           <h2
             id="contact-title"
-            className="font-heading text-3xl font-bold text-ink sm:text-4xl"
+            className="font-heading text-3xl font-extrabold text-navy-800 uppercase sm:text-4xl"
           >
             Come and say hello
           </h2>

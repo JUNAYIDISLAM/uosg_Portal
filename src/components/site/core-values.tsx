@@ -6,11 +6,23 @@ const icons = { users: Users, tent: Tent, heart: HeartHandshake };
 
 export function CoreValues() {
   return (
-    <section aria-labelledby="values-title" className="bg-white py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section
+      aria-labelledby="values-title"
+      className="relative bg-violet-50 pt-24 pb-20 sm:pt-32 lg:pt-36 lg:pb-24"
+    >
+      {/* Straight sloped top edge: high on the left, lower on the right */}
+      <svg
+        className="absolute inset-x-0 top-0 h-12 w-full text-white sm:h-20 lg:h-24"
+        viewBox="0 0 1440 120"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path d="M0 0H1440V120Z" fill="currentColor" />
+      </svg>
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           id="values-title"
-          eyebrow="Our core values"
           title="More than just an organization"
           subtitle="We empower young people through Scouting to build character, develop skills and create a positive impact in the community."
         />

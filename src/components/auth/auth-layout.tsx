@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { LogoMark } from "@/components/site/logo";
+import { LogoMark, LogoText } from "@/components/site/logo";
 
 /** Split-screen layout used by the login and setup pages. */
 export function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -29,7 +29,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <LogoMark />
-            <span className="font-heading text-2xl font-bold text-brand-800">UOSG</span>
+            <LogoText />
           </Link>
           <Link
             href="/"

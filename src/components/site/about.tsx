@@ -9,7 +9,7 @@ export function About() {
         <div>
           <h2
             id="about-title"
-            className="max-w-md font-heading text-3xl font-bold text-ink sm:text-4xl"
+            className="max-w-md font-heading text-3xl font-extrabold text-navy-800 uppercase sm:text-4xl"
           >
             Scouting for a stronger tomorrow
           </h2>

@@ -24,7 +24,7 @@ export function News({ items }: { items: NewsItem[] }) {
           <div className="max-w-xl">
             <h2
               id="news-title"
-              className="font-heading text-3xl font-bold text-ink sm:text-4xl"
+              className="font-heading text-3xl font-extrabold text-navy-800 uppercase sm:text-4xl"
             >
               Latest news &amp; announcements
             </h2>

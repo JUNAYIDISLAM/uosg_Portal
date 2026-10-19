@@ -3,42 +3,57 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonClass } from "@/components/ui/button";
 
+const motto = [
+  { word: "Explore", className: "text-brand-800" },
+  { word: "Learn", className: "text-navy-800" },
+  { word: "Serve", className: "text-[#ff0000]" },
+];
+
 export function Hero() {
   return (
-    <section id="home" className="bg-mist">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
-        <div>
-          <p className="text-sm font-semibold text-brand-600">Explore · Learn · Serve</p>
-          <h1 className="mt-4 font-heading text-4xl font-bold leading-[1.08] text-brand-800 sm:text-5xl lg:text-6xl">
-            United Open Scout Group
-          </h1>
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-body">
-            We are a community of young people guided by Scouting values, working together for
-            personal growth, leadership and a stronger society.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/#activities" className={buttonClass("primary")}>
-              Explore our activities
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-            <Link href="/#contact" className={buttonClass("ember")}>
-              Join our group
-            </Link>
-          </div>
-        </div>
+    <section id="home" className="relative isolate overflow-hidden">
+      <Image
+        src="/images/hero-group.jpg"
+        alt=""
+        fill
+        preload
+        sizes="100vw"
+        className="-z-20 object-cover object-[center_65%]"
+      />
+      {/* Lightens the photo so the dark text stays readable */}
+      <div className="absolute inset-0 -z-10 bg-white/60" />
 
-        {/* Green frame offset to the bottom-left, as in the design */}
-        <div className="rounded-[28px_24px_24px_96px] bg-brand-600 pb-2.5 pl-2.5 shadow-2xl shadow-brand-900/20">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[24px_24px_24px_90px]">
-            <Image
-              src="/images/hero.jpg"
-              alt="Members of United Open Scout Group in uniform"
-              fill
-              preload
-              sizes="(min-width: 1024px) 560px, 100vw"
-              className="object-cover"
-            />
-          </div>
+      <div className="mx-auto flex min-h-[560px] max-w-5xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:min-h-[640px]">
+        {/* Phones: one word per line. Wider screens: one line with dots. */}
+        <h1 className="flex flex-col items-center font-heading text-5xl leading-tight font-extrabold sm:flex-row sm:text-6xl lg:text-7xl">
+          {motto.map(({ word, className }, i) => (
+            <span key={word}>
+              {i > 0 && (
+                <span className="mx-4 hidden text-navy-800/40 sm:inline" aria-hidden="true">
+                  ·
+                </span>
+              )}
+              <span className={className}>{word}</span>
+            </span>
+          ))}
+        </h1>
+
+        <p className="mt-6 max-w-[60rem] text-lg leading-relaxed font-medium text-ink sm:text-xl">
+          We are a community of young people guided by Scouting values, building leadership,
+          fostering personal growth, and working together to create a stronger society through{" "}
+          {/* Large screens: keep the closing words on their own line */}
+          <br className="hidden lg:inline" />
+          service and teamwork.
+        </p>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <Link href="/#activities" className={buttonClass("primary", "lg", "w-52")}>
+            Explore More
+            <ArrowRight className="size-5" strokeWidth={3} aria-hidden="true" />
+          </Link>
+          <Link href="/#contact" className={buttonClass("ember", "lg", "w-52")}>
+            Join With Us
+          </Link>
         </div>
       </div>
     </section>

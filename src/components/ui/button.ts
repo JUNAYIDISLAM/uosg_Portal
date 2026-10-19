@@ -1,8 +1,8 @@
 type Variant = "primary" | "ember" | "outline" | "outline-light" | "white";
-type Size = "sm" | "md";
+type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
   primary: "bg-brand-600 text-white hover:bg-brand-700 focus-visible:outline-brand-600",
@@ -14,8 +14,9 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-5 text-sm",
+  sm: "h-9 px-4 text-sm font-semibold",
+  md: "h-11 px-5 text-sm font-semibold",
+  lg: "h-12 px-6 text-base font-bold",
 };
 
 export function buttonClass(variant: Variant = "primary", size: Size = "md", extra = "") {

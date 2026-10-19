@@ -20,6 +20,7 @@
 
   --color-ember-500: #dc3b26;
   --color-ember-600: #c3311e;
+  --color-violet-50: #f7f2fc;
   --color-violet-600: #6b2fa0;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -38,5 +39,5 @@ body {
 
 /* Offset anchor targets so the sticky header doesn't cover section titles */
 section[id] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6.5rem;
 }

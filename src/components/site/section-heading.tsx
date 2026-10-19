@@ -6,6 +6,8 @@ type Props = {
   align?: "center" | "left";
   tone?: "dark" | "light";
   id?: string;
+  /** Use "h1" when the section is the main heading of its own page. */
+  as?: "h1" | "h2";
 };
 
 const eyebrowColors = {
@@ -22,6 +24,7 @@ export function SectionHeading({
   align = "center",
   tone = "dark",
   id,
+  as: Heading = "h2",
 }: Props) {
   const centered = align === "center";
   return (
@@ -29,14 +32,14 @@ export function SectionHeading({
       {eyebrow && (
         <p className={`text-sm font-semibold ${eyebrowColors[eyebrowTone]}`}>{eyebrow}</p>
       )}
-      <h2
+      <Heading
         id={id}
-        className={`mt-2 font-heading text-3xl font-bold sm:text-4xl ${
-          tone === "light" ? "text-white" : "text-ink"
+        className={`${eyebrow ? "mt-2" : ""} font-heading text-3xl font-extrabold uppercase sm:text-4xl ${
+          tone === "light" ? "text-white" : "text-navy-800"
         }`}
       >
         {title}
-      </h2>
+      </Heading>
       {subtitle && (
         <p
           className={`mt-4 text-base leading-relaxed ${
