@@ -56,6 +56,14 @@ async function Messages() {
                 >
                   {m.email}
                 </a>
+                {m.phone && (
+                  <a
+                    href={`tel:${m.phone.replace(/[^+\d]/g, "")}`}
+                    className="block text-sm text-body hover:underline"
+                  >
+                    {m.phone}
+                  </a>
+                )}
               </div>
               <p className="text-xs text-muted">{timeAgo(m.createdAt)}</p>
             </div>

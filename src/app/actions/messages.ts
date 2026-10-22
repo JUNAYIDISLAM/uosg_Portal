@@ -9,17 +9,24 @@ import { db } from "@/lib/db";
 // ── Public contact form ──────────────────────────────────────────────
 
 const contactSchema = z.object({
-  name: z.string().trim().min(2, "Please enter your name.").max(100),
+  firstName: z.string().trim().min(1, "Please enter your first name.").max(50),
+  lastName: z.string().trim().min(1, "Please enter your last name.").max(50),
   email: z.email("Please enter a valid email address."),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^\+?[\d\s()-]{7,20}$/, "Please enter a valid phone number."),
   message: z.string().trim().min(10, "Your message should be at least 10 characters.").max(2000),
 });
+
+type ContactField = "firstName" | "lastName" | "email" | "phone" | "message";
 
 export type ContactState = {
   status: "idle" | "success" | "error";
   message?: string;
-  fieldErrors?: Partial<Record<"name" | "email" | "message", string>>;
+  fieldErrors?: Partial<Record<ContactField, string>>;
   /** Submitted values, so React's form reset doesn't wipe them on errors. */
-  values?: Record<"name" | "email" | "message", string>;
+  values?: Record<ContactField, string>;
 };
 
 const MAX_MESSAGES_PER_HOUR = 3;
@@ -40,7 +47,16 @@ export async function sendContactMessage(
   }
   if (state.status !== "error") return state;
   const value = (key: string) => String(formData.get(key) ?? "");
-  return { ...state, values: { name: value("name"), email: value("email"), message: value("message") } };
+  return {
+    ...state,
+    values: {
+      firstName: value("firstName"),
+      lastName: value("lastName"),
+      email: value("email"),
+      phone: value("phone"),
+      message: value("message"),
+    },
+  };
 }
 
 async function saveContactMessage(formData: FormData): Promise<ContactState> {
@@ -50,8 +66,10 @@ async function saveContactMessage(formData: FormData): Promise<ContactState> {
   }
 
   const parsed = contactSchema.safeParse({
-    name: formData.get("name"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
     email: formData.get("email"),
+    phone: formData.get("phone"),
     message: formData.get("message"),
   });
   if (!parsed.success) {
@@ -60,8 +78,10 @@ async function saveContactMessage(formData: FormData): Promise<ContactState> {
       status: "error",
       message: "Please check the highlighted fields.",
       fieldErrors: {
-        name: errors.name?.[0],
+        firstName: errors.firstName?.[0],
+        lastName: errors.lastName?.[0],
         email: errors.email?.[0],
+        phone: errors.phone?.[0],
         message: errors.message?.[0],
       },
     };
@@ -78,7 +98,11 @@ async function saveContactMessage(formData: FormData): Promise<ContactState> {
     };
   }
 
-  await db.contactMessage.create({ data: { ...parsed.data, email } });
+  // The form asks for first and last name separately; they are stored together as one name.
+  const { firstName, lastName, phone, message } = parsed.data;
+  await db.contactMessage.create({
+    data: { name: `${firstName} ${lastName}`, email, phone, message },
+  });
   return { status: "success", message: "Thanks! Your message has been sent. We’ll be in touch." };
 }
 

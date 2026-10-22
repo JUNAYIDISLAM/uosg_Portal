@@ -5,8 +5,8 @@ import { buttonClass } from "@/components/ui/button";
 
 const motto = [
   { word: "Explore", className: "text-brand-800" },
-  { word: "Learn", className: "text-navy-800" },
-  { word: "Serve", className: "text-[#ff0000]" },
+  { word: "Learn", className: "text-navy-800", dotClassName: "text-brand-800" },
+  { word: "Serve", className: "text-[#ff0000]", dotClassName: "text-[#ff0000]" },
 ];
 
 export function Hero() {
@@ -23,13 +23,13 @@ export function Hero() {
       {/* Lightens the photo so the dark text stays readable */}
       <div className="absolute inset-0 -z-10 bg-white/60" />
 
-      <div className="mx-auto flex min-h-[560px] max-w-5xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:min-h-[640px]">
+      <div className="mx-auto flex min-h-[656px] max-w-5xl flex-col items-center justify-center px-4 pt-20 pb-44 text-center sm:px-6 lg:min-h-[736px]">
         {/* Phones: one word per line. Wider screens: one line with dots. */}
         <h1 className="flex flex-col items-center font-heading text-5xl leading-tight font-extrabold sm:flex-row sm:text-6xl lg:text-7xl">
-          {motto.map(({ word, className }, i) => (
+          {motto.map(({ word, className, dotClassName }) => (
             <span key={word}>
-              {i > 0 && (
-                <span className="mx-4 hidden text-navy-800/40 sm:inline" aria-hidden="true">
+              {dotClassName && (
+                <span className={`mx-4 hidden sm:inline ${dotClassName}`} aria-hidden="true">
                   ·
                 </span>
               )}

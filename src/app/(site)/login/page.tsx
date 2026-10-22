@@ -3,8 +3,8 @@ import Link from "next/link";
 import { redirect, unstable_rethrow } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { AuthLayout } from "@/components/auth/auth-layout";
 import { LoginForm } from "@/components/auth/login-form";
+import { buttonClass } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { db } from "@/lib/db";
 import { can } from "@/lib/permissions";
@@ -13,23 +13,33 @@ export const metadata: Metadata = { title: "Member login" };
 
 export default function LoginPage() {
   return (
-    <AuthLayout>
-      <h1 className="font-heading text-3xl font-bold text-ink">Member login</h1>
-      <p className="mt-3 text-body">
-        Sign in to manage letters, announcements and group documents.
-      </p>
-      <div className="mt-8">
-        {/* The database checks never block the form: each streams in on its own
-            and renders nothing if the database can't be reached. */}
-        <Suspense>
-          <RedirectIfSignedIn />
-        </Suspense>
-        <Suspense>
-          <SetupNotice />
-        </Suspense>
-        <LoginForm />
+    <section className="bg-mist px-4 py-16 sm:py-24">
+      <div className="mx-auto max-w-md rounded-2xl bg-white p-7 shadow-sm ring-1 ring-line sm:p-10">
+        <div className="text-center">
+          <h1 className="font-heading text-3xl font-bold text-ink">Welcome back</h1>
+          <p className="mt-2 text-body">Sign in to your member account</p>
+        </div>
+
+        <div className="mt-8">
+          {/* The database checks never block the form: each streams in on its own
+              and renders nothing if the database can't be reached. */}
+          <Suspense>
+            <RedirectIfSignedIn />
+          </Suspense>
+          <Suspense>
+            <SetupNotice />
+          </Suspense>
+          <LoginForm />
+        </div>
+
+        <p className="mt-8 flex items-center gap-3 text-xs font-medium tracking-wider text-muted uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line">
+          Not a member yet?
+        </p>
+        <Link href="/#contact" className={buttonClass("outline", "lg", "mt-5 w-full")}>
+          Join with us
+        </Link>
       </div>
-    </AuthLayout>
+    </section>
   );
 }
 

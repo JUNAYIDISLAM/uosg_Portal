@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    qualities: [75],
+    // 90 is used for card photos so they stay sharp
+    qualities: [75, 90],
   },
   turbopack: {
     rules: {

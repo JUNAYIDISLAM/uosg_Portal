@@ -113,6 +113,7 @@ model ContactMessage {
   id        String    @id @default(cuid())
   name      String
   email     String
+  phone     String?
   message   String
   readAt    DateTime?
   createdAt DateTime  @default(now())

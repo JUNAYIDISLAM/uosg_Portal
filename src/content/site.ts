@@ -13,6 +13,8 @@ export const siteInfo = {
     facebook: "#",
     instagram: "#",
     youtube: "#",
+    linkedin: "#",
+    twitter: "#",
   },
 };
 
@@ -25,6 +27,37 @@ export const navLinks = [
   { label: "Gallery", href: "/#gallery" },
   { label: "Contact", href: "/#contact" },
 ];
+
+export const whyJoin = [
+  {
+    title: "Open to everyone",
+    text: "Any young person can join, whatever their school, background or experience.",
+    details:
+      "As an open scout group, we are not tied to any one school or institution. Boys and girls from every background are welcome, and you do not need any scouting experience to start. Seniors in your patrol help you settle in and learn the basics.",
+    icon: "open",
+  },
+  {
+    title: "Learning by doing",
+    text: "Camps, projects and real responsibilities instead of lectures.",
+    details:
+      "Scouting is learned outdoors, not from a textbook. Members pitch tents, cook at camp, read maps, practise first aid and plan their own projects. Each activity ends with a short look back at what went well, so the lessons stay with you.",
+    icon: "tent",
+  },
+  {
+    title: "Experienced leaders",
+    text: "Trained volunteers guide every activity and keep everyone safe.",
+    details:
+      "Our activities are run by trained adult leaders who plan every camp and outing with safety in mind. Senior rovers support them and guide younger members, so there is always someone to ask for help.",
+    icon: "leaders",
+  },
+  {
+    title: "Friends for life",
+    text: "Share tents, trails and campfires with people who become close friends.",
+    details:
+      "Few things bring people together like a night at camp or a long day on the trail. You will meet young people from different schools and backgrounds who share your sense of adventure, and many of those friendships last well beyond your scouting years.",
+    icon: "friends",
+  },
+] as const;
 
 export const coreValues = [
   {
@@ -45,10 +78,22 @@ export const coreValues = [
 ] as const;
 
 export const aboutPoints = [
-  "Outdoor activities & adventure",
-  "Leadership and life skills",
-  "Community service projects",
-  "A supportive and inclusive community",
+  {
+    title: "Outdoor activities & adventure",
+    text: "Camps, hikes and nights under the open sky, where we learn to plan, pack and look after each other.",
+  },
+  {
+    title: "Leadership and life skills",
+    text: "Every member gets the chance to lead a patrol, run a project and speak up in front of a group.",
+  },
+  {
+    title: "Community service projects",
+    text: "Clean-up drives, relief work and awareness campaigns that make a real difference where we live.",
+  },
+  {
+    title: "A supportive and inclusive community",
+    text: "Open to every young person, whatever their background. Here you find friends who have your back.",
+  },
 ];
 
 export type CommitteeMember = {
@@ -89,7 +134,7 @@ export const featuredActivity: Activity & { label: string } = {
   title: "Scout Camp",
   text: "Build friendship, learn survival skills and enjoy nature together.",
   tag: "Camping",
-  image: "/images/camp-feature.jpg",
+  image: "/images/cards/campfire-gathering.jpg",
 };
 
 export const activities: Activity[] = [
@@ -97,25 +142,25 @@ export const activities: Activity[] = [
     title: "Community Service",
     text: "Serve the community and help create a cleaner, better tomorrow.",
     tag: "Service",
-    image: "/images/cleanup.jpg",
+    image: "/images/cards/team-circle.jpg",
   },
   {
     title: "Leadership Training",
     text: "Develop leadership, communication and teamwork skills.",
     tag: "Training",
-    image: "/images/training.jpg",
+    image: "/images/cards/pioneering.jpg",
   },
   {
     title: "Hiking & Trekking",
     text: "Explore new places, challenge yourself and grow stronger.",
     tag: "Outdoor",
-    image: "/images/mountain.jpg",
+    image: "/images/cards/trail-hike.jpg",
   },
   {
     title: "Adventure Camp",
     text: "Experience the thrill of the outdoors around the night fire.",
     tag: "Camping",
-    image: "/images/campfire.jpg",
+    image: "/images/cards/signpost.jpg",
   },
 ];
 
@@ -147,35 +192,55 @@ export const news: NewsItem[] = [
     title: "Annual Scout Camp 2026",
     summary: "Our members enjoyed three days of learning, adventure and friendship in Sreemangal.",
     tag: "Camp",
-    image: "/images/campfire.jpg",
+    image: "/images/cards/woggle-circle.jpg",
   },
   {
     date: "2026-09-12",
     title: "Community Clean-Up Drive",
     summary: "Together we cleared over 400 kg of waste from the Hatirjheel lakeside walkway.",
     tag: "Service",
-    image: "/images/cleanup.jpg",
+    image: "/images/cards/hands-together.jpg",
   },
   {
     date: "2026-08-30",
     title: "New Members Welcome",
     summary: "We are excited to welcome 18 new rovers to our growing family this session.",
     tag: "Crew",
-    image: "/images/training.jpg",
+    image: "/images/cards/scarves-knot.jpg",
   },
 ];
 
 export type GalleryItem = {
   src: string;
   alt: string;
+  position?: string; // Tailwind object-position class, for photos whose subject is off-centre
   video?: { title: string; url: string };
 };
 
 export const gallery: GalleryItem[] = [
-  { src: "/images/mountain.jpg", alt: "Rovers looking out over misty mountains at sunrise" },
-  { src: "/images/campfire-tall.jpg", alt: "Rovers gathered around a campfire at night" },
-  { src: "/images/cleanup-wide.jpg", alt: "Rovers collecting litter during a clean-up drive" },
-  { src: "/images/camp-tents.jpg", alt: "Scouts sitting together at a forest campsite" },
+  {
+    src: "/images/gallery/sunset-campfire.jpg",
+    alt: "Scouts sitting around a campfire by bell tents at sunset",
+    position: "object-[center_65%]",
+  },
+  { src: "/images/gallery/river-crossing.jpg", alt: "Scouts helping each other across a mountain stream" },
+  { src: "/images/gallery/torches.jpg", alt: "Two scouts holding lit torches at night" },
+  { src: "/images/gallery/hike-break.jpg", alt: "A hiking group with backpacks resting on a forest trail" },
+  {
+    src: "/images/gallery/trail-trio.jpg",
+    alt: "Three scouts with backpacks walking between cornfields",
+    position: "object-[center_75%]",
+  },
+  {
+    src: "/images/gallery/jamboree.jpg",
+    alt: "A large crowd of scouts in front of the jamboree stage",
+    position: "object-[center_70%]",
+  },
+  {
+    src: "/images/gallery/tent-field.jpg",
+    alt: "Rows of tents pitched across a campground",
+    position: "object-[center_70%]",
+  },
   {
     src: "/images/training.jpg",
     alt: "Camp 2026 recap video",

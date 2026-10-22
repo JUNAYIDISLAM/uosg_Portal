@@ -1,20 +1,55 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, type InputHTMLAttributes } from "react";
 import { sendContactMessage, type ContactState } from "@/app/actions/messages";
-import { buttonClass } from "@/components/ui/button";
 
 const initialState: ContactState = { status: "idle" };
 
 const inputClass =
-  "mt-2 block w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 aria-invalid:border-ember-500";
+  "block w-full rounded-md border border-line bg-white px-5 py-4 text-base text-ink outline-none transition placeholder:text-muted focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 aria-invalid:border-ember-500";
+
+type Field = "firstName" | "lastName" | "email" | "phone" | "message";
+
+/** Placeholder shows the label; a hidden label keeps it readable for screen readers. */
+function ContactInput({
+  name,
+  label,
+  error,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement> & { name: Field; label: string; error?: string }) {
+  const id = `contact-${name}`;
+  return (
+    <div>
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+      <input
+        id={id}
+        name={name}
+        placeholder={`${label}*`}
+        required
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={inputClass}
+        {...props}
+      />
+      {error && (
+        <p id={`${id}-error`} className="mt-1.5 text-xs text-ember-600">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
 
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(sendContactMessage, initialState);
   const errors = state.fieldErrors ?? {};
+  const values = state.values;
 
   return (
-    <form action={formAction} className="rounded-2xl bg-mist p-6 sm:p-8" noValidate>
+    // Fills the row height so its bottom lines up with the cards; the message box takes the slack
+    <form action={formAction} className="flex h-full flex-col rounded-2xl bg-white" noValidate>
       {/* Spam trap: hidden from people, filled in by bots. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>
@@ -23,63 +58,58 @@ export function ContactForm() {
         </label>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="contact-name" className="text-sm font-medium text-ink">
-            Name
-          </label>
-          <input
-            id="contact-name"
-            name="name"
-            autoComplete="name"
-            required
-            defaultValue={state.values?.name}
-            aria-invalid={!!errors.name}
-            aria-describedby={errors.name ? "contact-name-error" : undefined}
-            className={inputClass}
-          />
-          {errors.name && (
-            <p id="contact-name-error" className="mt-1.5 text-xs text-ember-600">
-              {errors.name}
-            </p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="contact-email" className="text-sm font-medium text-ink">
-            Email
-          </label>
-          <input
-            id="contact-email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            defaultValue={state.values?.email}
-            aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "contact-email-error" : undefined}
-            className={inputClass}
-          />
-          {errors.email && (
-            <p id="contact-email-error" className="mt-1.5 text-xs text-ember-600">
-              {errors.email}
-            </p>
-          )}
-        </div>
+      <p className="leading-relaxed text-body">
+        Please fill out the form below with your details and message, and our team will get back to
+        you as soon as possible.
+      </p>
+
+      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        <ContactInput
+          name="firstName"
+          label="First Name"
+          autoComplete="given-name"
+          defaultValue={values?.firstName}
+          error={errors.firstName}
+        />
+        <ContactInput
+          name="lastName"
+          label="Last Name"
+          autoComplete="family-name"
+          defaultValue={values?.lastName}
+          error={errors.lastName}
+        />
+        <ContactInput
+          name="email"
+          label="Email"
+          type="email"
+          autoComplete="email"
+          defaultValue={values?.email}
+          error={errors.email}
+        />
+        <ContactInput
+          name="phone"
+          label="Phone"
+          type="tel"
+          autoComplete="tel"
+          defaultValue={values?.phone}
+          error={errors.phone}
+        />
       </div>
 
-      <div className="mt-5">
-        <label htmlFor="contact-message" className="text-sm font-medium text-ink">
+      <div className="mt-5 flex flex-1 flex-col">
+        <label htmlFor="contact-message" className="sr-only">
           Message
         </label>
         <textarea
           id="contact-message"
           name="message"
-          rows={4}
+          rows={5}
           required
-          defaultValue={state.values?.message}
+          placeholder="Write Message"
+          defaultValue={values?.message}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "contact-message-error" : undefined}
-          className={`${inputClass} resize-y`}
+          className={`${inputClass} min-h-32 flex-1 resize-none`}
         />
         {errors.message && (
           <p id="contact-message-error" className="mt-1.5 text-xs text-ember-600">
@@ -88,16 +118,21 @@ export function ContactForm() {
         )}
       </div>
 
-      <button type="submit" disabled={pending} className={buttonClass("primary", "md", "mt-6 w-full")}>
-        {pending ? "Sending…" : "Send message"}
-      </button>
-
+      {/* Above the button, so the form bottom stays level with the cards */}
       <p
         aria-live="polite"
-        className={`mt-3 text-sm ${state.status === "success" ? "text-brand-700" : "text-ember-600"}`}
+        className={`mt-4 text-sm empty:mt-0 ${state.status === "success" ? "text-brand-700" : "text-ember-600"}`}
       >
         {state.message}
       </p>
+
+      <button
+        type="submit"
+        disabled={pending}
+        className="mt-7 inline-flex h-12 self-start items-center justify-center rounded-full bg-brand-600 px-8 text-sm font-semibold text-white transition-colors hover:bg-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {pending ? "Sending…" : "Send Message"}
+      </button>
     </form>
   );
 }

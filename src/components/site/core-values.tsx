@@ -1,8 +1,15 @@
-import { HeartHandshake, Tent, Users } from "lucide-react";
 import { coreValues } from "@/content/site";
+import { HelpingHandsIcon, HikerIcon, LeaderIcon } from "./people-icons";
 import { SectionHeading } from "./section-heading";
 
-const icons = { users: Users, tent: Tent, heart: HeartHandshake };
+const icons = { users: LeaderIcon, tent: HikerIcon, heart: HelpingHandsIcon };
+
+// One brand colour per card, same family as the header strip
+const accents = [
+  { icon: "text-brand-600", tint: "bg-brand-600/10", bar: "bg-brand-600" },
+  { icon: "text-violet-600", tint: "bg-violet-600/10", bar: "bg-violet-600" },
+  { icon: "text-ember-500", tint: "bg-ember-500/10", bar: "bg-ember-500" },
+];
 
 export function CoreValues() {
   return (
@@ -27,18 +34,33 @@ export function CoreValues() {
           subtitle="We empower young people through Scouting to build character, develop skills and create a positive impact in the community."
         />
 
-        <ul className="mt-14 grid gap-10 md:grid-cols-3 md:gap-0 md:divide-x md:divide-line">
-          {coreValues.map((value) => {
+        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+          {coreValues.map((value, i) => {
             const Icon = icons[value.icon];
+            const accent = accents[i % accents.length];
             return (
-              <li key={value.title} className="px-6 text-center">
-                <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-                  <Icon className="size-6" aria-hidden="true" />
+              <li
+                key={value.title}
+                className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-sm ring-1 ring-navy-800/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <span
+                  className="absolute top-6 right-7 font-heading text-5xl font-extrabold text-navy-800/[0.06]"
+                  aria-hidden="true"
+                >
+                  {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-5 font-heading text-lg font-bold text-ink">{value.title}</h3>
-                <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-body">
-                  {value.text}
-                </p>
+                <span
+                  className={`flex size-16 items-center justify-center rounded-2xl ${accent.tint} ${accent.icon}`}
+                >
+                  <Icon className="size-10" aria-hidden="true" />
+                </span>
+                <h3 className="mt-6 font-heading text-xl font-bold text-ink">{value.title}</h3>
+                <p className="mt-3 leading-relaxed text-body">{value.text}</p>
+                {/* Colour bar slides in along the bottom edge on hover */}
+                <span
+                  className={`absolute inset-x-0 bottom-0 h-1.5 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${accent.bar}`}
+                  aria-hidden="true"
+                />
               </li>
             );
           })}

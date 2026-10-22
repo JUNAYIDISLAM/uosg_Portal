@@ -11,14 +11,16 @@ export function Gallery() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading id="gallery-title" title="Moments from the trail" />
 
-        <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-[2fr_1fr_1fr] lg:grid-rows-2">
-          <div className="relative col-span-2 aspect-[16/10] overflow-hidden rounded-xl lg:col-span-1 lg:row-span-2 lg:aspect-auto">
+        {/* Large photo on the left, square tiles around it; the video fills the last two cells */}
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <div className="group relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl lg:row-span-2 lg:aspect-square">
             <Image
               src={feature.src}
               alt={feature.alt}
               fill
               sizes="(min-width: 1024px) 600px, 100vw"
-              className="object-cover"
+              quality={90}
+              className={`object-cover transition-transform duration-500 group-hover:scale-105 ${feature.position ?? ""}`}
             />
           </div>
 
@@ -27,13 +29,13 @@ export function Gallery() {
               <a
                 key={item.src}
                 href={item.video.url}
-                className="group relative aspect-[16/10] overflow-hidden rounded-xl"
+                className="group relative col-span-2 aspect-[16/9] overflow-hidden rounded-xl lg:aspect-auto"
               >
                 <Image
                   src={item.src}
                   alt=""
                   fill
-                  sizes="(min-width: 1024px) 290px, 50vw"
+                  sizes="(min-width: 1024px) 600px, 100vw"
                   className="object-cover"
                 />
                 <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-navy-900/55 text-white transition-colors group-hover:bg-navy-900/45">
@@ -44,13 +46,14 @@ export function Gallery() {
                 </span>
               </a>
             ) : (
-              <div key={item.src} className="relative aspect-[16/10] overflow-hidden rounded-xl">
+              <div key={item.src} className="group relative aspect-square overflow-hidden rounded-xl">
                 <Image
                   src={item.src}
                   alt={item.alt}
                   fill
-                  sizes="(min-width: 1024px) 290px, 50vw"
-                  className="object-cover"
+                  sizes="(min-width: 1024px) 300px, 50vw"
+                  quality={90}
+                  className={`object-cover transition-transform duration-500 group-hover:scale-105 ${item.position ?? ""}`}
                 />
               </div>
             ),
